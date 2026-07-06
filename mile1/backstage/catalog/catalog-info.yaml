@@ -1,0 +1,118 @@
+# Backstage Catalog - Software Catalog Entries
+# This file registers your services, APIs, and resources in Backstage
+
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: sample-app
+  description: "Demo application for GitOps platform"
+  annotations:
+    github.com/project-slug: your-org/gitops-platform
+    backstage.io/techdocs-ref: dir:.
+    argocd/app-name: dev-apps
+  tags:
+    - go
+    - kubernetes
+    - argocd
+    - demo
+  links:
+    - url: https://github.com/your-org/gitops-platform/tree/main/apps/sample-app
+      title: Source Code
+      icon: github
+    - url: https://argocd.yourdomain.com/applications/dev-apps
+      title: ArgoCD (Dev)
+      icon: dashboard
+    - url: https://dev.yourdomain.com
+      title: Live Demo (Dev)
+      icon: launch
+spec:
+  type: service
+  lifecycle: experimental
+  owner: platform-team
+  system: gitops-platform
+  providesApis:
+    - sample-app-api
+  dependsOn:
+    - resource:postgres-db
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: sample-app-api
+  description: "REST API for sample-app"
+spec:
+  type: openapi
+  lifecycle: experimental
+  owner: platform-team
+  definition:
+    $text: |
+      openapi: 3.0.0
+      info:
+        title: Sample App API
+        version: 1.0.0
+      paths:
+        /health:
+          get:
+            summary: Health check
+            responses:
+              '200':
+                description: OK
+        /ready:
+          get:
+            summary: Readiness check
+            responses:
+              '200':
+                description: OK
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: postgres-db
+  description: "PostgreSQL database for sample-app"
+spec:
+  type: database
+  owner: platform-team
+  system: gitops-platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: gitops-platform
+  description: "GitOps Platform with ArgoCD, Backstage, and CI/CD"
+spec:
+  owner: platform-team
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: platform-team
+  description: "Platform Engineering Team"
+spec:
+  type: team
+  profile:
+    displayName: Platform Team
+    email: platform@yourdomain.com
+    picture: https://avatars.githubusercontent.com/u/your-org?v=4
+  members:
+    - user:jane
+    - user:john
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: jane
+spec:
+  profile:
+    displayName: Jane Developer
+    email: jane@yourdomain.com
+  memberOf: [platform-team]
+---
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: john
+spec:
+  profile:
+    displayName: John Engineer
+    email: john@yourdomain.com
+  memberOf: [platform-team]

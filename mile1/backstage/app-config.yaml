@@ -1,0 +1,112 @@
+# Backstage App Configuration
+# Main config file for the Backstage developer portal
+
+app:
+  title: GitOps Platform
+  baseUrl: https://backstage.yourdomain.com
+  support:
+    url: https://github.com/your-org/gitops-platform/issues
+    items:
+      - title: Documentation
+        url: https://github.com/your-org/gitops-platform/docs
+      - title: Platform Team Slack
+        url: https://slack.yourdomain.com/platform
+
+organization:
+  name: Your Company
+
+backend:
+  baseUrl: https://backstage.yourdomain.com
+  listen:
+    port: 7007
+  database:
+    client: pg
+    connection:
+      host: ${{ env.POSTGRES_HOST }}
+      port: ${{ env.POSTGRES_PORT }}
+      user: ${{ env.POSTGRES_USER }}
+      password: ${{ env.POSTGRES_PASSWORD }}
+      database: ${{ env.POSTGRES_DB }}
+  auth:
+    keys:
+      - secret: ${{ env.AUTH_SECRET }}
+    providers:
+      github:
+        development:
+          clientId: ${{ env.GITHUB_CLIENT_ID }}
+          clientSecret: ${{ env.GITHUB_CLIENT_SECRET }}
+
+catalog:
+  locations:
+    # Local catalog entities (this repo)
+    - type: file
+      target: ../../backstage/catalog/catalog-info.yaml
+      rules:
+        - allow: [Component, API, Resource, System, Group, User]
+
+    # Auto-discover from GitHub (all repos with catalog-info.yaml)
+    - type: github
+      target: https://github.com/your-org/{repo}/blob/main/catalog-info.yaml
+      rules:
+        - allow: [Component, API, Resource, System]
+
+  providers:
+    github:
+      your-org:
+        token: ${{ env.GITHUB_TOKEN }}
+
+# TechDocs - documentation from markdown in repos
+techdocs:
+  builder: local
+  generator:
+    runIn: docker
+  publisher:
+    type: local
+
+# Kubernetes integration - show pod status in Backstage
+kubernetes:
+  serviceLocatorMethod:
+    type: multiTenant
+  clusterLocatorMethods:
+    - type: config
+      clusters:
+        - name: dev
+          url: https://k8s-dev.yourdomain.com
+          authProvider: serviceAccount
+          serviceAccountToken: ${{ env.K8S_DEV_TOKEN }}
+        - name: staging
+          url: https://k8s-staging.yourdomain.com
+          authProvider: serviceAccount
+          serviceAccountToken: ${{ env.K8S_STAGING_TOKEN }}
+        - name: prod
+          url: https://k8s-prod.yourdomain.com
+          authProvider: serviceAccount
+          serviceAccountToken: ${{ env.K8S_PROD_TOKEN }}
+
+# ArgoCD integration - show sync status
+argocd:
+  baseUrl: https://argocd.yourdomain.com
+  appLocatorMethods:
+    - type: config
+      clusters:
+        - name: dev
+        - name: staging
+        - name: prod
+
+# Permission framework
+permission:
+  enabled: true
+  rules:
+    - allow: [RESOURCE_CATALOG_ENTITY_READ]
+    - allow: [RESOURCE_CATALOG_ENTITY_UPDATE]
+    - allow: [RESOURCE_KUBERNETES_READ]
+    - allow: [RESOURCE_ARGOCD_READ]
+
+# Feature flags
+features:
+  - name: catalog-import
+    enabled: true
+  - name: kubernetes-plugin
+    enabled: true
+  - name: argocd-plugin
+    enabled: true

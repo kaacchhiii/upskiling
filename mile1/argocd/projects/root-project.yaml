@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: root-project
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: Root project for all applications
+  sourceRepos:
+    - '*'
+  destinations:
+    - namespace: '*'
+      server: '*'
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  roles:
+    - name: admin
+      description: Full access to all applications
+      policies:
+        - p, proj:root-project:admin, applications, *, root-project/*, allow
+      groups:
+        - platform-admins
+    - name: developer
+      description: Read-only access to applications
+      policies:
+        - p, proj:root-project:developer, applications, get, root-project/*, allow
+      groups:
+        - developers

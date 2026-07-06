@@ -1,0 +1,35 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: prod
+resources:
+  - ../../base
+patches:
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: sample-app
+      spec:
+        replicas: 3
+        template:
+          spec:
+            containers:
+              - name: sample-app
+                image: your-org/sample-app:v1.0.0
+                env:
+                  - name: ENVIRONMENT
+                    value: "prod"
+                  - name: LOG_LEVEL
+                    value: "warn"
+                resources:
+                  requests:
+                    memory: "256Mi"
+                    cpu: "200m"
+                  limits:
+                    memory: "512Mi"
+                    cpu: "500m"
+  target:
+    kind: Deployment
+    name: sample-app
+commonLabels:
+  environment: prod
