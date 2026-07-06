@@ -1,2 +1,0 @@
-# upskiling
-# upskiling kachi@kachi

@@ -1,0 +1,17 @@
+# =============================================================================
+# MONITORING NAMESPACE
+# =============================================================================
+# WHY: We run all observability tools (Prometheus, Grafana, Alertmanager) in
+# their own namespace so they're cleanly separated from your application.
+# This makes it easy to manage permissions, resource quotas, and cleanup
+# independently from the "app" namespace where your workloads live.
+# =============================================================================
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring
+  labels:
+    # WHY: Labels help you filter and identify resources.
+    # "purpose: observability" makes it clear what this namespace is for
+    # when you run `kubectl get namespaces --show-labels`.
+    purpose: observability

@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: dev-project
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: Development environment project
+  sourceRepos:
+    - "https://github.com/kaacchhiii/upskilling/mile1.git"
+  destinations:
+    - namespace: dev
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  roles:
+    - name: admin
+      policies:
+        - p, proj:dev-project:admin, applications, *, dev-project/*, allow
+      groups:
+        - platform-admins
+    - name: developer
+      policies:
+        - p, proj:dev-project:developer, applications, *, dev-project/*, allow
+      groups:
+        - developers
