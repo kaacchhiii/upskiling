@@ -1,16 +1,13 @@
-# Helm values for kube-prometheus-stack
-# Installs Prometheus + Grafana + Alertmanager in one go
-
 grafana:
   enabled: true
   adminUser: admin
-  adminPassword: admin          # change in production
+  adminPassword: admin
   service:
-    type: NodePort              # easy access on minikube/kind
+    type: NodePort
 
 prometheus:
   prometheusSpec:
-    retention: 7d               # keep metrics for 7 days
+    retention: 7d
     serviceMonitorSelectorNilUsesHelmValues: false
     serviceMonitorSelector: {}
     serviceMonitorNamespaceSelector: {}
@@ -24,7 +21,6 @@ nodeExporter:
 kubeStateMetrics:
   enabled: true
 
-# Alert: fire if any pod in "app" namespace restarts more than 3 times in 10 min
 additionalPrometheusRulesMap:
   app-alerts:
     groups:
@@ -38,7 +34,6 @@ additionalPrometheusRulesMap:
             annotations:
               summary: "Pod {{ $labels.pod }} is crash-looping"
 
-# Tell Prometheus to scrape the backend /health endpoint
 additionalServiceMonitors:
   - name: backend-monitor
     selector:

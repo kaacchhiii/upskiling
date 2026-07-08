@@ -1,4 +1,3 @@
-# Backend — Flask API
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -79,7 +78,6 @@ spec:
   type: ClusterIP
 
 ---
-# HPA — auto-scales backend pods based on CPU usage
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:

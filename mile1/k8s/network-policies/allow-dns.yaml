@@ -1,4 +1,3 @@
-# Allow DNS — without this, pods can't resolve service names like "backend" or "postgres"
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:

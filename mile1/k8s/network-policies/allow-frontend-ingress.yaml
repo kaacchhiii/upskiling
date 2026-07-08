@@ -1,5 +1,3 @@
-# Allow external traffic to reach frontend on port 80
-# No "from" filter = accept from anywhere (users need to reach the website)
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:

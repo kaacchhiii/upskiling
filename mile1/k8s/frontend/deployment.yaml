@@ -1,5 +1,3 @@
-# Frontend — nginx reverse proxy
-# ConfigMap holds the nginx config so we can change it without rebuilding the image
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -11,18 +9,15 @@ data:
         listen 80;
         server_name _;
 
-        # Serve static files
         location / {
             root /usr/share/nginx/html;
             index index.html;
         }
 
-        # Forward /api/ requests to the backend service
         location /api/ {
             proxy_pass http://backend:8000/api/;
         }
 
-        # Health check for Kubernetes probes
         location /health {
             return 200 'ok';
             add_header Content-Type text/plain;
@@ -95,7 +90,6 @@ spec:
   type: ClusterIP
 
 ---
-# HPA — auto-scales frontend pods based on CPU usage
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:

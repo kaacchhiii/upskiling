@@ -22,7 +22,6 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  # Job 1: Secrets scanning - runs on EVERY commit/PR
   gitleaks:
     name: Gitleaks Secrets Scan
     runs-on: ubuntu-latest
@@ -37,7 +36,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  # Job 2: Build & Test
   build-test:
     name: Build & Test
     runs-on: ubuntu-latest
@@ -64,7 +62,6 @@ jobs:
           docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:test \
             sh -c "npm test 2>/dev/null || go test ./... 2>/dev/null || python -m pytest 2>/dev/null || echo 'No test framework detected'"
 
-  # Job 3: Push to registry (only on main branch or manual dispatch)
   push-image:
     name: Push Image to Registry
     runs-on: ubuntu-latest
@@ -107,7 +104,6 @@ jobs:
       - name: Output image digest
         run: echo "IMAGE_DIGEST=${{ steps.meta.outputs.tags }}" >> $GITHUB_OUTPUT
 
-  # Job 4: Update Kustomize overlay (promotion)
   promote:
     name: Promote to Environment
     runs-on: ubuntu-latest
@@ -138,11 +134,9 @@ jobs:
         run: |
           OVERLAY="${{ steps.overlay.outputs.path }}"
           IMAGE="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event.inputs.environment }}-latest"
-          
-          # Use yq to update the image in kustomization.yaml
+
           yq eval -i ".patches[0].patch |= sub(\"image: .*\", \"image: $IMAGE\")" "$OVERLAY"
-          
-          # Show diff
+
           git diff "$OVERLAY"
 
       - name: Create PR for promotion
@@ -154,9 +148,9 @@ jobs:
           title: "Promote to ${{ github.event.inputs.environment }}: ${{ github.sha }}"
           body: |
             Automated promotion triggered by workflow dispatch.
-            
+
             **Image:** `${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event.inputs.environment }}-latest`
-            
+
             **Commit:** ${{ github.sha }}
           labels: promotion, ${{ github.event.inputs.environment }}
 

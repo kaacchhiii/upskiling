@@ -1,7 +1,4 @@
-# Allow backend → postgres on port 5432
-# Only the backend can talk to the database — frontend cannot
 
-# Part 1: backend is allowed to SEND to postgres
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -23,7 +20,6 @@ spec:
           port: 5432
 
 ---
-# Part 2: postgres is allowed to RECEIVE from backend
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:

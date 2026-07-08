@@ -1,15 +1,10 @@
-# Gitleaks Configuration - Simple Secrets Detection
-# Runs on EVERY commit/PR to catch secrets before they hit Git history
 
 title = "GitOps Platform Gitleaks Config"
 
-# Built-in rules cover: AWS, GitHub, Slack, Docker, Kubernetes, Generic API keys
-# No custom rules needed for most projects
 
 [allowlist]
 description = "Global allowlist for false positives"
 
-# Allow test/fake values in test files
 paths = [
   "(.*/)?test(s?)/.*",
   "(.*/)?_test\\.go",
@@ -19,13 +14,11 @@ paths = [
   "\\.gitleaks\\.toml",
 ]
 
-# Allow example/placeholder values
 regexes = [
   '''(?i)(example|test|fake|dummy|placeholder|your[_-]?key|your[_-]?secret|changeme|xxx+)''',
   '''^[A-Za-z0-9+/=]{1,20}$''',
 ]
 
-# Allow specific files entirely
 files = [
   "docs/**",
   "*.md",
@@ -34,7 +27,6 @@ files = [
   "*.yml.example",
 ]
 
-# Global settings
 verbose = true
 redact = true
 no-git = false

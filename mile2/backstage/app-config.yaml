@@ -1,5 +1,3 @@
-# Backstage App Configuration
-# Main config file for the Backstage developer portal
 
 app:
   title: GitOps Platform
@@ -38,13 +36,11 @@ backend:
 
 catalog:
   locations:
-    # Local catalog entities (this repo)
     - type: file
       target: ../../backstage/catalog/catalog-info.yaml
       rules:
         - allow: [Component, API, Resource, System, Group, User]
 
-    # Auto-discover from GitHub (all repos with catalog-info.yaml)
     - type: github
       target: https://github.com/your-org/{repo}/blob/main/catalog-info.yaml
       rules:
@@ -55,7 +51,6 @@ catalog:
       your-org:
         token: ${{ env.GITHUB_TOKEN }}
 
-# TechDocs - documentation from markdown in repos
 techdocs:
   builder: local
   generator:
@@ -63,7 +58,6 @@ techdocs:
   publisher:
     type: local
 
-# Kubernetes integration - show pod status in Backstage
 kubernetes:
   serviceLocatorMethod:
     type: multiTenant
@@ -83,7 +77,6 @@ kubernetes:
           authProvider: serviceAccount
           serviceAccountToken: ${{ env.K8S_PROD_TOKEN }}
 
-# ArgoCD integration - show sync status
 argocd:
   baseUrl: https://argocd.yourdomain.com
   appLocatorMethods:
@@ -93,7 +86,6 @@ argocd:
         - name: staging
         - name: prod
 
-# Permission framework
 permission:
   enabled: true
   rules:
@@ -102,7 +94,6 @@ permission:
     - allow: [RESOURCE_KUBERNETES_READ]
     - allow: [RESOURCE_ARGOCD_READ]
 
-# Feature flags
 features:
   - name: catalog-import
     enabled: true

@@ -28,8 +28,8 @@ patches:
                   limits:
                     memory: "256Mi"
                     cpu: "200m"
-  target:
-    kind: Deployment
-    name: sample-app
+    target:
+      kind: Deployment
+      name: sample-app
 commonLabels:
   environment: staging

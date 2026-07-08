@@ -1,5 +1,3 @@
-# Default deny — block all traffic in the app namespace
-# This is the starting point: deny everything, then allow only what's needed
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:

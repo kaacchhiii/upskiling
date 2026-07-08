@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Install Prometheus + Grafana using Helm
 
 echo "Adding Helm repo..."
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts 2>/dev/null || true
