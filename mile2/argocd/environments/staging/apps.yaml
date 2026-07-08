@@ -8,7 +8,7 @@ metadata:
 spec:
   project: root-project
   source:
-    repoURL: https://github.com/kaacchhiii/upskilling/mile1.git
+    repoURL: https://github.com/kaacchhiii/upskilling/mile2.git
     targetRevision: main
     path: apps/sample-app/k8s/overlays/staging
   destination:
