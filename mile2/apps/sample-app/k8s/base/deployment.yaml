@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: sample-app
-          image: ghcr.io/dikachi/sample-app:latest
+          image: ghcr.io/kaacchhiii/sample-app:latest
           ports:
             - containerPort: 8080
           env:

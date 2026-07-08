@@ -3,10 +3,10 @@ app:
   title: GitOps Platform
   baseUrl: https://backstage.yourdomain.com
   support:
-    url: https://github.com/your-org/gitops-platform/issues
+    url: https://github.com/kaacchhiii/gitops-platform/issues
     items:
       - title: Documentation
-        url: https://github.com/your-org/gitops-platform/docs
+        url: https://github.com/kaacchhiii/gitops-platform/docs
       - title: Platform Team Slack
         url: https://slack.yourdomain.com/platform
 
@@ -42,13 +42,13 @@ catalog:
         - allow: [Component, API, Resource, System, Group, User]
 
     - type: github
-      target: https://github.com/your-org/{repo}/blob/main/catalog-info.yaml
+      target: https://github.com/kaacchhiii/{repo}/blob/main/catalog-info.yaml
       rules:
         - allow: [Component, API, Resource, System]
 
   providers:
     github:
-      your-org:
+      kaacchhiii:
         token: ${{ env.GITHUB_TOKEN }}
 
 techdocs:

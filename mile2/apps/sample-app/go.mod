@@ -1,3 +1,3 @@
-module github.com/kaacchhiii/upskilling/mile1
+module github.com/kaacchhiii/upskillingplan-projects
 
 go 1.22

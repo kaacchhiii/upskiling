@@ -15,7 +15,7 @@ patches:
           spec:
             containers:
               - name: sample-app
-                image: dikachi/sample-app:staging-latest
+                image: bit3down/sample-app:staging-latest
                 env:
                   - name: ENVIRONMENT
                     value: "staging"

@@ -15,7 +15,7 @@ patches:
           spec:
             containers:
               - name: sample-app
-                image: dikachi/sample-app:v1.0.0
+                image: bit3down/sample-app:v1.0.0
                 env:
                   - name: ENVIRONMENT
                     value: "prod"

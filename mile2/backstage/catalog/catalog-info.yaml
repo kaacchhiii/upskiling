@@ -5,7 +5,7 @@ metadata:
   name: sample-app
   description: "Demo application for GitOps platform"
   annotations:
-    github.com/project-slug: your-org/gitops-platform
+    github.com/project-slug: kaacchhiii/gitops-platform
     backstage.io/techdocs-ref: dir:.
     argocd/app-name: dev-apps
   tags:
@@ -14,7 +14,7 @@ metadata:
     - argocd
     - demo
   links:
-    - url: https://github.com/your-org/gitops-platform/tree/main/apps/sample-app
+    - url: https://github.com/kaacchhiii/gitops-platform/tree/main/apps/sample-app
       title: Source Code
       icon: github
     - url: https://argocd.yourdomain.com/applications/dev-apps
@@ -90,7 +90,7 @@ spec:
   profile:
     displayName: Platform Team
     email: platform@yourdomain.com
-    picture: https://avatars.githubusercontent.com/u/your-org?v=4
+    picture: https://avatars.githubusercontent.com/u/kaacchhiii?v=4
   members:
     - user:jane
     - user:john

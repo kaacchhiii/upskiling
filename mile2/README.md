@@ -36,7 +36,7 @@ kubectl apply -f argocd/application.yaml
 1. Create a new repo on GitHub
 2. Push this code:
 ```bash
-git remote add origin https://github.com/YOUR-USER/YOUR-REPO.git
+git remote add origin https://github.com/kaacchhiii/upskillingplan-projects.git
 git push -u origin main
 ```
 
@@ -83,7 +83,7 @@ Edit `apps/sample-app/src/main.go` and push.
 ### Change Image Registry
 Edit `apps/sample-app/k8s/base/deployment.yaml`:
 ```yaml
-image: ghcr.io/YOUR-USER/YOUR-REPO:latest
+image: ghcr.io/kaacchhiii/upskillingplan-projects:latest
 ```
 
 ### Add Tests

@@ -7,5 +7,5 @@ commonLabels:
   app: backstage
   managed-by: kustomize
 images:
-  - name: your-org/backstage
+  - name: bit3down/backstage
     newTag: latest
